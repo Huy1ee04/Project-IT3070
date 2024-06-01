@@ -99,7 +99,11 @@ public class RateMonotonicScheduler {
     }
 
     public static void main(String[] args) {
+        int n;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter observation time: ");
+        n = scanner.nextInt();
         getProcessInfo(); // Collecting processes detail
-        rateMonotonic(20);
+        rateMonotonic(n);
     }
 }

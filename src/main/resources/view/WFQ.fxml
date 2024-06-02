@@ -76,9 +76,9 @@
       <Text fx:id="resourceAllocFlow1" layoutX="104.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allocation: 0" wrappingWidth="119.5" />
       <Text fx:id="resourceReturnFlow1" layoutX="258.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Return: 0" wrappingWidth="89.95703125" />
       <Text fx:id="resourceReturnFlow3" layoutX="258.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Return: 0" wrappingWidth="89.95703125" />
-      <Text fx:id="resourceAllocFlow3" layoutX="104.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allocation: 0" wrappingWidth="89.95703125" />
+      <Text fx:id="resourceAllocFlow3" layoutX="104.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allocation: 0" wrappingWidth="119.5" />
       <Text fx:id="resourceReturnFlow2" layoutX="258.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Return: 0" wrappingWidth="89.95703125" />
-      <Text fx:id="resourceAllocFlow2" layoutX="104.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allocation: 0" wrappingWidth="89.95703125" />
+      <Text fx:id="resourceAllocFlow2" layoutX="104.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allocation: 0" wrappingWidth="119.5" />
       <Text fx:id="time" layoutX="461.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" wrappingWidth="157.13671875" />
    </children>
 </AnchorPane>

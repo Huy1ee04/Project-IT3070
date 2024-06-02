@@ -1,4 +1,4 @@
-package Scheduler;
+package scheduler;
 
 import container.Flow;
 import Item.PackageItem;
@@ -29,27 +29,19 @@ public class WFQScheduler {
         for (Flow flow : flows) {
             if (!flow.isEmpty()) {
                 flow.setResorceAlled(flow.getWeight() * resource / totalWeight);
-
-                Platform.runLater(() -> {
-                    flow.getResourceAlloc().setText("Allocation: " + flow.getResorceAllocation());
-                });
-
+                flow.getResourceAlloc().setText("Allocation: " + flow.getResorceAllocation());
                 flow.setPackageOut();
-                while (!flow.getPackageOut().isEmpty()) {
-                    PackageItem pkg = flow.getPackageOut().getFirst();
+                for (PackageItem pkg : flow.getPackageOut()) {
                     pkg.setOrderTrans(++order);
                     pkg.setSrcFlow(flow);
                     queueOut.addPackage(pkg);
-                    flow.getPackageOut().removeFirst();
 
                     Platform.runLater(() -> {
-                        if (!flow.getHbox().getChildren().isEmpty()) {
-                            flow.getHbox().getChildren().removeFirst();
-                        }
                         queueOut.gethBox().getChildren().addFirst(pkg.getNode());
                     });
                 }
-
+                flow.updateHbox();
+                flow.clearPackageOut();
                 int resourceReturn = flow.returnResource();
                 resource += resourceReturn;
 

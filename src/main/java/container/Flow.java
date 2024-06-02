@@ -1,7 +1,8 @@
 package container;
 
 import java.util.LinkedList;
-import Item.PackageItem; // Import lớp Package từ gói Item
+import Item.PackageItem;
+import javafx.application.Platform;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -22,13 +23,6 @@ public class Flow implements IContainer {
 
     public boolean isEmpty() {
         return this.queue.isEmpty();
-    }
-
-    public PackageItem departPacket() {
-        if (!queue.isEmpty()) {
-            return queue.removeFirst();
-        }
-        return null;
     }
 
     public void addPacket(PackageItem packet) {
@@ -66,11 +60,27 @@ public class Flow implements IContainer {
     }
 
     public void setPackageOut() {
-        while (!this.queue.isEmpty() && this.resorceAllocation >= this.queue.getFirst().getSizePackage()) {
-            PackageItem pkg = this.departPacket();
-            this.resorceAllocation -= pkg.getSizePackage();
-            this.packageOut.add(pkg);
+        while (!queue.isEmpty() && resorceAllocation >= queue.getFirst().getSizePackage()) {
+            PackageItem pkg = queue.removeFirst();
+            resorceAllocation -= pkg.getSizePackage();
+            packageOut.add(pkg);
         }
+    }
+
+    public void updateHbox() {
+        Platform.runLater(() -> {
+            while (!packageOut.isEmpty()) {
+                PackageItem pkg = packageOut.removeFirst();
+                if (!hbox.getChildren().isEmpty()) {
+                    hbox.getChildren().removeFirst();
+                }
+                pkg.setSrcFlow(this);
+            }
+        });
+    }
+
+    public void clearPackageOut(){
+        packageOut.clear();
     }
 
     public LinkedList<PackageItem> getPackageOut() {

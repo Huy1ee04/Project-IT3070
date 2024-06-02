@@ -1,4 +1,4 @@
-package Scheduler;
+package scheduler;
 
 import Item.Task;
 import java.util.PriorityQueue;

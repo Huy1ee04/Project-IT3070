@@ -1,4 +1,4 @@
-package Scheduler;
+package scheduler;
 
 import java.util.Scanner;
 

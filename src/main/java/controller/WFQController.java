@@ -1,7 +1,7 @@
 package controller;
 
 import Item.PackageItem;
-import Scheduler.WFQScheduler;
+import scheduler.WFQScheduler;
 import container.Flow;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -64,8 +64,6 @@ public class WFQController extends BaseController{
     private Text resourceReturnFlow2;
     @FXML
     private Text resourceReturnFlow3;
-    @FXML
-    private Text time;
 
     public void initialize() {
         ArrayList<Flow> flows = new ArrayList<>();

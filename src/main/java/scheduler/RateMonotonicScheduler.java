@@ -1,3 +1,5 @@
+package Scheduler;
+
 import java.util.Scanner;
 
 public class RateMonotonicScheduler {
@@ -60,7 +62,7 @@ public class RateMonotonicScheduler {
     private static void rateMonotonic(int time) {
         float utilization = 0;
         for (int i = 0; i < num_of_process; i++) {
-            utilization += (1.0 * execution_time[i]) / period[i];
+            utilization += (float) ((1.0 * execution_time[i]) / period[i]);
         }
 
         int n = num_of_process;
@@ -99,11 +101,7 @@ public class RateMonotonicScheduler {
     }
 
     public static void main(String[] args) {
-        int n;
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter observation time: ");
-        n = scanner.nextInt();
         getProcessInfo(); // Collecting processes detail
-        rateMonotonic(n);
+        rateMonotonic(20);
     }
 }

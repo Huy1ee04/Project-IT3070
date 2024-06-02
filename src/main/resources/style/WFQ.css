@@ -1,0 +1,31 @@
+/* styles.css */
+.root {
+    -fx-background-color: #f0f0f0;
+}
+
+Button {
+    -fx-background-color: #4CAF50; /* Màu xanh lá cây */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20; /* Bo tròn góc */
+    -fx-padding: 10 20; /* Khoảng cách giữa chữ và biên nút */
+}
+
+Button:hover {
+    -fx-background-color: #45a049; /* Màu xanh lá cây nhạt khi di chuột qua */
+}
+
+#returnButton, #resetButton {
+    -fx-background-color: #2196F3; /* Màu xanh dương */
+}
+
+#returnButton:hover, #resetButton:hover {
+    -fx-background-color: #1e87ca; /* Màu xanh dương nhạt khi di chuột qua */
+}
+
+Text {
+    -fx-font-size: 14px;
+    -fx-fill: #333;
+}
+
+/* Loại bỏ các CSS ở chỗ HBox và VBox */

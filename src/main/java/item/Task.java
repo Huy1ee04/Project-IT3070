@@ -7,6 +7,8 @@ public class Task implements Comparable<Task> {
     private int deadline;
     private int remainingTime;
     private int nextPeriodStart;
+    private int arrivalTime;
+
 
     public Task(int id, int executionTime, int period, int deadline) {
         this.id = id;
@@ -15,6 +17,16 @@ public class Task implements Comparable<Task> {
         this.deadline = deadline;
         this.remainingTime = executionTime;
         this.nextPeriodStart = 0;
+        this.arrivalTime = 0;
+    }
+    public Task(int id, int executionTime, int period, int deadline, int arrivalTime) {
+        this.id = id;
+        this.executionTime = executionTime;
+        this.period = period;
+        this.deadline = deadline;
+        this.remainingTime = executionTime;
+        this.nextPeriodStart = arrivalTime + period;
+        this.arrivalTime = arrivalTime;
     }
 
     public int getId() {
@@ -63,6 +75,14 @@ public class Task implements Comparable<Task> {
 
     public void setNextPeriodStart(int nextPeriodStart) {
         this.nextPeriodStart = nextPeriodStart;
+    }
+
+    public int getArrivalTime() {return arrivalTime;}
+    public void setArrivalTime(int arrivalTime) {this.arrivalTime = arrivalTime;};
+    public void resetTask() {
+        this.remainingTime = this.executionTime;
+        this.arrivalTime = this.arrivalTime + this.period;
+        this.deadline = this.deadline + this.period;
     }
 
     @Override

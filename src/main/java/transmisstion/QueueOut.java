@@ -2,11 +2,11 @@ package transmisstion;
 
 import java.util.ArrayList;
 import java.util.List;
-import Item.PackageItem; // Import lớp Package từ gói Item
+import item.Packet; // Import lớp Package từ gói Item
 import javafx.scene.layout.HBox;
 
 public class QueueOut {
-    private final List<PackageItem> outgoingQueue;
+    private final List<Packet> outgoingQueue;
     private int throughput; // Thuộc tính đại diện cho thông lượng của hàng đợi
     private HBox hBox;
 
@@ -16,12 +16,12 @@ public class QueueOut {
     }
 
     // Phương thức để thêm gói tin vào hàng đợi
-    public void addPackage(PackageItem packet) {
+    public void addPackage(Packet packet) {
         outgoingQueue.add(packet);
     }
 
     // Phương thức để lấy gói tin từ hàng đợi
-    public PackageItem retrievePackage() {
+    public Packet retrievePackage() {
         if (!outgoingQueue.isEmpty()) {
             return outgoingQueue.remove(0); // Lấy và loại bỏ gói tin đầu tiên
         }
@@ -36,7 +36,7 @@ public class QueueOut {
     // Phương thức in ra thông tin của các gói tin trong hàng đợi
     public void printQueueInfo() {
         System.out.println("Outgoing Queue Information:");
-        for (PackageItem packet : outgoingQueue) {
+        for (Packet packet : outgoingQueue) {
             System.out.println("Packet Size: " + packet.getSizePackage());
             // In thêm các thông tin khác của gói tin nếu cần
         }

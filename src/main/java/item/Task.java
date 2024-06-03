@@ -1,4 +1,4 @@
-package Item;
+package item;
 
 public class Task implements Comparable<Task> {
     private int id;

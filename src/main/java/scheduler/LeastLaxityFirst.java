@@ -1,6 +1,6 @@
 package scheduler;
 
-import Item.Task;
+import item.Task;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
@@ -73,9 +73,9 @@ public class LeastLaxityFirst {
         Task task_3 = new Task(3, 3, 10, 10,  0);
 
 
-       scheduler.addTask(task1);
-       scheduler.addTask(task2);
-       scheduler.addTask(task3);
+       //scheduler.addTask(task1);
+       //scheduler.addTask(task2);
+       //scheduler.addTask(task3);
 
         scheduler.scheduleTasks(20);
     }

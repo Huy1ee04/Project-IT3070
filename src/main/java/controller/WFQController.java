@@ -1,7 +1,7 @@
 package controller;
 
-import Item.PackageItem;
-import scheduler.WFQScheduler;
+import item.Packet;
+import scheduler.WeightedFairQueueScheduler;
 import container.Flow;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -64,7 +64,8 @@ public class WFQController extends BaseController{
     private Text resourceReturnFlow2;
     @FXML
     private Text resourceReturnFlow3;
-
+    @FXML
+    private Text resourceRemain;
     public void initialize() {
         ArrayList<Flow> flows = new ArrayList<>();
         QueueOut queueOut = new QueueOut();
@@ -92,7 +93,7 @@ public class WFQController extends BaseController{
         createSecondFlow.setOnAction(event -> showInputDialogAndAddSquare(flow2,  "Second Flow", Color.GREEN));
         createThirdFlow.setOnAction(event -> showInputDialogAndAddSquare(flow3,  "Third Flow", Color.YELLOW));
         startButton.setOnAction(event -> {
-            WFQScheduler.simulationWFQ(flows, queueOut);
+            WeightedFairQueueScheduler.simulationWFQ(flows, queueOut,resourceRemain);
         });
         returnButton.setOnAction(event -> {
             SwitchManager.goHomePage(this, event);
@@ -125,7 +126,7 @@ public class WFQController extends BaseController{
             if (!size.trim().isEmpty()) { // Kiểm tra nhập liệu không rỗng
                 try {
                     int packageSize = Integer.parseInt(size);
-                    PackageItem pkg = new PackageItem(packageSize);
+                    Packet pkg = new Packet(packageSize);
                     pkg.setNode(addSquareToHBox(flow.getHbox(), color));
                     pkg.getNode().addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);

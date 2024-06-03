@@ -5,6 +5,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Comparator;
+import java.util.Iterator;
 
 
 public class LeastLaxityFirst {
@@ -14,13 +15,20 @@ public class LeastLaxityFirst {
     }
     private Set<Task> tasks;
     public LeastLaxityFirst() {
-        Comparator<Task> byArrivalTime = Comparator.comparingInt(Task::getArrivalTime);
-        this.tasks = new TreeSet<>(byArrivalTime);
+        Comparator<Task> byArrivalTimeThenId = (Task t1, Task t2) -> {
+            if (t1.getArrivalTime() != t2.getArrivalTime()) {
+                return Integer.compare(t1.getArrivalTime(), t2.getArrivalTime());
+            } else {
+                return Integer.compare(t1.getId(), t2.getId());
+            }
+        };
+        this.tasks = new TreeSet<>(byArrivalTimeThenId);
     }
     public void addTask(Task task) {
         tasks.add(task);
     }
     public void scheduleTasks(int endTime) {
+
         PriorityQueue<Task> availableTasks = new PriorityQueue<>((task1, task2) -> {
             int laxity1 = getLaxity(task1);
             int laxity2 = getLaxity(task2);
@@ -33,16 +41,19 @@ public class LeastLaxityFirst {
         });
 
         while (currentTime < endTime) {
-            for (Task task : tasks) {
+            Iterator<Task> iterator = tasks.iterator();
+            while (iterator.hasNext()) {
+                Task task = iterator.next();
                 if (currentTime == task.getArrivalTime()){
                     availableTasks.offer(task);
-                    tasks.remove(task);
+                    iterator.remove();
                 }
                 else break;
             }
 
+
             if (availableTasks.isEmpty()) {
-                System.out.println("Current Time: " + currentTime + "No tasks available");
+                System.out.println("Current Time: " + currentTime + " No tasks available");
                 currentTime++;
                 continue;
             }
@@ -68,15 +79,15 @@ public class LeastLaxityFirst {
 
     public static void main(String[] args) {
         LeastLaxityFirst scheduler = new LeastLaxityFirst();
-        Task task_1 = new Task(1, 2, 6, 6, 0);
-        Task task_2 = new Task(2, 2, 8, 8, 0);
-        Task task_3 = new Task(3, 3, 10, 10,  0);
+        Task task_1 = new Task(1, 3, 7, 12, 0);
+        Task task_2 = new Task(2, 4, 10, 13, 0);
+        Task task_3 = new Task(3, 5, 12, 14,  0);
+
+        scheduler.addTask(task_1);
+        scheduler.addTask(task_2);
+        scheduler.addTask(task_3);
 
 
-       //scheduler.addTask(task1);
-       //scheduler.addTask(task2);
-       //scheduler.addTask(task3);
-
-        scheduler.scheduleTasks(20);
+        scheduler.scheduleTasks(25);
     }
 }

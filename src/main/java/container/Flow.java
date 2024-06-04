@@ -1,7 +1,7 @@
 package container;
 
 import java.util.LinkedList;
-import Item.PackageItem;
+import item.Packet;
 import javafx.application.Platform;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -9,12 +9,13 @@ import javafx.scene.text.Text;
 public class Flow implements IContainer {
     private String nameFlow;
     private int weight;
-    private final LinkedList<PackageItem> queue;
+    private final LinkedList<Packet> queue;
     private HBox hbox;
     private Text resourceAlloc = new Text("Allocation: 0");
     private Text resourceReturn = new Text("Return: 0");
     private int resorceAllocation;
-    private LinkedList<PackageItem> packageOut = new LinkedList<>();
+    private int resourceRecently;
+    private LinkedList<Packet> packageOut = new LinkedList<>();
 
     public Flow(int weight) {
         this.weight = weight;
@@ -25,7 +26,7 @@ public class Flow implements IContainer {
         return this.queue.isEmpty();
     }
 
-    public void addPacket(PackageItem packet) {
+    public void addPacket(Packet packet) {
         queue.add(packet);
     }
 
@@ -57,11 +58,16 @@ public class Flow implements IContainer {
     public void setResorceAlled(int resourceAllocation) {
         this.resorceAllocation += resourceAllocation;
         resourceAlloc.setText("Allocation: " + this.resorceAllocation);
+        resourceRecently = resourceAllocation;
+    }
+
+    public int getResourceRecently() {
+        return resourceRecently;
     }
 
     public void setPackageOut() {
         while (!queue.isEmpty() && resorceAllocation >= queue.getFirst().getSizePackage()) {
-            PackageItem pkg = queue.removeFirst();
+            Packet pkg = queue.removeFirst();
             resorceAllocation -= pkg.getSizePackage();
             packageOut.add(pkg);
         }
@@ -70,7 +76,7 @@ public class Flow implements IContainer {
     public void updateHbox() {
         Platform.runLater(() -> {
             while (!packageOut.isEmpty()) {
-                PackageItem pkg = packageOut.removeFirst();
+                Packet pkg = packageOut.removeFirst();
                 if (!hbox.getChildren().isEmpty()) {
                     hbox.getChildren().removeFirst();
                 }
@@ -83,7 +89,7 @@ public class Flow implements IContainer {
         packageOut.clear();
     }
 
-    public LinkedList<PackageItem> getPackageOut() {
+    public LinkedList<Packet> getPackageOut() {
         return this.packageOut;
     }
 

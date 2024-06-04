@@ -1,9 +1,9 @@
-package Item;
+package item;
 
 import container.Flow;
 import javafx.scene.Node;
 
-public class PackageItem implements ITransUnit {
+public class Packet implements ITransUnit {
     private final int sizePackage; // Kích thước của package
     private int resourceAlloc; // Tài nguyên cấp phát cho package
     private int orderTrans; // Thứ tự truyền tải
@@ -11,7 +11,7 @@ public class PackageItem implements ITransUnit {
     private Node node;
 
     // Constructor
-    public PackageItem(int sizePackage) {
+    public Packet(int sizePackage) {
         this.sizePackage = sizePackage;
     }
 

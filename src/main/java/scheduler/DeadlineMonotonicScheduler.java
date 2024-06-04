@@ -1,6 +1,6 @@
 package scheduler;
 
-import Item.Task;
+import item.Task;
 import java.util.PriorityQueue;
 
 public class DeadlineMonotonicScheduler {

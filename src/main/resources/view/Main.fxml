@@ -13,7 +13,7 @@
       <AnchorPane prefHeight="606.0" prefWidth="250.0">
          <children>
             <Button fx:id="WFQButton" layoutX="93.0" layoutY="519.0" mnemonicParsing="false" text="WFQ" />
-            <Button layoutX="88.0" layoutY="444.0" mnemonicParsing="false" text="Button" />
+            <Button fx:id="RMSButton" layoutX="88.0" layoutY="444.0" mnemonicParsing="false" text="Button" />
             <Button layoutX="88.0" layoutY="370.0" mnemonicParsing="false" text="Button" />
             <Button layoutX="88.0" layoutY="303.0" mnemonicParsing="false" text="Button" />
             <Button layoutX="88.0" layoutY="215.0" mnemonicParsing="false" text="Button" />

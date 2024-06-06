@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -22,8 +23,6 @@ public class EDFController extends BaseController {
     Rectangle CPU;
     @FXML
     HBox processQueue;
-    @FXML
-    HBox nameProcessQueue;
     @FXML
     Button returnButton;
     @FXML
@@ -91,6 +90,9 @@ public class EDFController extends BaseController {
         runButton.setOnAction(event -> {
             result = EarliestDeadlineFirstScheduler.earliestDeadlineFirst(tasks, timeOfScheduling);
             visualizeResult();
+            for(Task task : tasks){
+                System.out.println(task.getId());
+            }
         });
         timeButton.setOnAction(event -> {
             try {
@@ -107,10 +109,10 @@ public class EDFController extends BaseController {
         Timeline timeline = new Timeline();
         for (int i = 0; i < resultArray.length; i++) {
             int index = i;
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(2 * index), event -> {
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(2), event -> {
                 int processId = Integer.parseInt(resultArray[index]);
                 if (processId != 0) {
-                    taskWork(processId, processQueue, nameProcessQueue);
+                    taskWork(processId, processQueue);
                 }
             });
             timeline.getKeyFrames().add(keyFrame);
@@ -118,12 +120,16 @@ public class EDFController extends BaseController {
         timeline.play();
     }
 
-    public void taskWork(int i, HBox processQueue, HBox nameProcessQueue) {
-        Rectangle rectangle = new Rectangle(60, 20);
+    public void taskWork(int i, HBox processQueue) {
+        VBox vbox = new VBox(); // Create a new VBox
+
+        Rectangle rectangle = new Rectangle(20, 60);
         rectangle.setFill(colorList.get(i % colorList.size()));
+
         Text name = new Text("P" + i);
-        processQueue.getChildren().add(rectangle);
-        nameProcessQueue.getChildren().add(name);
+
+        vbox.getChildren().addAll(rectangle, name); // Add Rectangle and Text to VBox
+        processQueue.getChildren().add(vbox); // Add VBox to processQueue
     }
 
     private void clearFields() {

@@ -4,6 +4,7 @@ import item.Task;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -41,12 +42,13 @@ public class EDFController extends BaseController {
     TextField timeField;
     @FXML
     Button timeButton;
-
+    int currentTime = 0;
     ArrayList<Color> colorList;
     StringBuffer result;
     ArrayList<Task> tasks = new ArrayList<>();
     private static int id = 0;
     int timeOfScheduling = 0;
+    double weight = 750;
 
     public void initialize() {
         // Khởi tạo danh sách màu sắc
@@ -63,13 +65,14 @@ public class EDFController extends BaseController {
         colorList.add(Color.web("#40E0D0"));   // Xanh ngọc
         colorList.add(Color.web("#800080"));   // Tím
 
+
         // Thiết lập hành động cho các nút
         returnButton.setOnAction(event -> {
             SwitchManager.goHomePage(this, event);
         });
         resetButton.setOnAction(event -> {
             try {
-                SwitchManager.goWFQPage(this, event);
+                SwitchManager.goEDFPage(this, event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -109,11 +112,9 @@ public class EDFController extends BaseController {
         Timeline timeline = new Timeline();
         for (int i = 0; i < resultArray.length; i++) {
             int index = i;
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(2), event -> {
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(2*index), event -> {
                 int processId = Integer.parseInt(resultArray[index]);
-                if (processId != 0) {
                     taskWork(processId, processQueue);
-                }
             });
             timeline.getKeyFrames().add(keyFrame);
         }
@@ -122,13 +123,14 @@ public class EDFController extends BaseController {
 
     public void taskWork(int i, HBox processQueue) {
         VBox vbox = new VBox(); // Create a new VBox
-
-        Rectangle rectangle = new Rectangle(20, 60);
+        vbox.setAlignment(Pos.CENTER);
+        Rectangle rectangle = new Rectangle(weight/timeOfScheduling, 60);
         rectangle.setFill(colorList.get(i % colorList.size()));
-
+        CPU.setFill(colorList.get(i % colorList.size()));
         Text name = new Text("P" + i);
-
-        vbox.getChildren().addAll(rectangle, name); // Add Rectangle and Text to VBox
+        currentTime = currentTime + 1;
+        Text current = new Text(Integer.toString(currentTime));
+        vbox.getChildren().addAll(current,rectangle, name); // Add Rectangle and Text to VBox
         processQueue.getChildren().add(vbox); // Add VBox to processQueue
     }
 

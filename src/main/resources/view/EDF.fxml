@@ -23,7 +23,7 @@
             </ImageView>
          </children>
       </StackPane>
-      <HBox fx:id="processQueue" layoutX="150.0" layoutY="268.0" prefHeight="100.0" prefWidth="500.0" spacing="20.0">
+      <HBox fx:id="processQueue" layoutX="25.0" layoutY="272.0" prefHeight="100.0" prefWidth="750.0">
          <padding>
             <Insets top="20.0" />
          </padding>
@@ -47,8 +47,8 @@
          </graphic>
       </Button>
       <!-- Các trường nhập liệu -->
-      <TextField fx:id="executionTimeField" layoutX="150.0" layoutY="100.0" promptText="Execution Time" />
-      <TextField fx:id="arrivalTimeField" layoutX="150.0" layoutY="130.0" promptText="Arrival Time" />
+      <TextField fx:id="executionTimeField" layoutX="150.0" layoutY="130.0" promptText="Execution Time" />
+      <TextField fx:id="arrivalTimeField" layoutX="150.0" layoutY="100.0" promptText="Arrival Time" />
       <TextField fx:id="deadlineField" layoutX="150.0" layoutY="160.0" promptText="Deadline" />
       <Button fx:id="addProcessButton" layoutX="150.0" layoutY="190.0" mnemonicParsing="false" text="Add Process" />
       <Button fx:id="runButton" layoutX="432.0" layoutY="455.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="170.0" text="Run EDF" />

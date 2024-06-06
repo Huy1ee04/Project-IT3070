@@ -8,6 +8,7 @@ public class Task implements Comparable<Task> {
     private int remainingTime;
     private int nextPeriodStart;
     private int arrivalTime;
+    private String name;
 
 
     public Task(int id, int executionTime, int period, int deadline) {
@@ -27,6 +28,16 @@ public class Task implements Comparable<Task> {
         this.remainingTime = executionTime;
         this.nextPeriodStart = arrivalTime + period;
         this.arrivalTime = arrivalTime;
+    }
+    public Task( int id,int executionTime, int deadline, int arrivalTime, String name){
+        this.id = id;
+        this.executionTime = executionTime;
+        this.deadline = deadline;
+        this.arrivalTime = arrivalTime;
+        this.name = name;
+    }
+    public Task(int id){
+        this.id = id;
     }
 
     public int getId() {
@@ -89,4 +100,5 @@ public class Task implements Comparable<Task> {
     public int compareTo(Task other) {
         return this.deadline - other.deadline;
     }
+
 }

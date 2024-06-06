@@ -27,6 +27,22 @@ public class SwitchManager {
         stage.setScene(scene);
         stage.show();
     }
+    public static void goRMSPage(BaseController baseController, Event event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(baseController.getClass().getResource("/view/rms.fxml"));
+        root = loader.load();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public static void goEDFPage(BaseController baseController, Event event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(baseController.getClass().getResource("/view/EDF.fxml"));
+        root = loader.load();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     public static void goDeadlineMonotonicPage(BaseController baseController, Event event) throws IOException {
         FXMLLoader loader = new FXMLLoader(baseController.getClass().getResource("/view/DeadlineMonotonic.fxml"));
         try {

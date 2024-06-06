@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EarliestDeadlineFirstController extends BaseController {
+public class EDFController extends BaseController {
     @FXML
     Rectangle CPU;
     @FXML
@@ -45,7 +45,7 @@ public class EarliestDeadlineFirstController extends BaseController {
 
     ArrayList<Color> colorList;
     StringBuffer result;
-    Set<Task> tasks = new HashSet<>();
+    ArrayList<Task> tasks = new ArrayList<>();
     private static int id = 0;
     int timeOfScheduling = 0;
 

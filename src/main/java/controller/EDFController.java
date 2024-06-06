@@ -16,8 +16,6 @@ import scheduler.EarliestDeadlineFirstScheduler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class EDFController extends BaseController {
     @FXML
@@ -42,6 +40,8 @@ public class EDFController extends BaseController {
     Button runButton;
     @FXML
     TextField timeField;
+    @FXML
+    Button timeButton;
 
     ArrayList<Color> colorList;
     StringBuffer result;
@@ -50,8 +50,8 @@ public class EDFController extends BaseController {
     int timeOfScheduling = 0;
 
     public void initialize() {
+        // Khởi tạo danh sách màu sắc
         colorList = new ArrayList<>();
-        // Thêm các màu vào danh sách
         colorList.add(Color.web("#000000"));   // Đen
         colorList.add(Color.web("#FF0000"));   // Đỏ
         colorList.add(Color.web("#00FF00"));   // Xanh lá cây
@@ -64,6 +64,7 @@ public class EDFController extends BaseController {
         colorList.add(Color.web("#40E0D0"));   // Xanh ngọc
         colorList.add(Color.web("#800080"));   // Tím
 
+        // Thiết lập hành động cho các nút
         returnButton.setOnAction(event -> {
             SwitchManager.goHomePage(this, event);
         });
@@ -75,18 +76,29 @@ public class EDFController extends BaseController {
             }
         });
         addProcessButton.setOnAction(event -> {
-            int executionTime = Integer.parseInt(executionTimeField.getText());
-            int arrivalTime = Integer.parseInt(arrivalTimeField.getText());
-            int deadline = Integer.parseInt(deadlineField.getText());
-            id++;
-            tasks.add(new Task(id, executionTime, deadline, arrivalTime, "P" + id));
+            try {
+                int executionTime = Integer.parseInt(executionTimeField.getText());
+                int arrivalTime = Integer.parseInt(arrivalTimeField.getText());
+                int deadline = Integer.parseInt(deadlineField.getText());
+                id++;
+                tasks.add(new Task(id, executionTime, deadline, arrivalTime, "P" + id));
+                clearFields();  // Xóa các trường sau khi thêm tiến trình
+            } catch (NumberFormatException e) {
+                // Xử lý lỗi khi người dùng nhập sai định dạng số
+                showError("Please enter valid numbers in all fields.");
+            }
         });
         runButton.setOnAction(event -> {
             result = EarliestDeadlineFirstScheduler.earliestDeadlineFirst(tasks, timeOfScheduling);
             visualizeResult();
         });
-        timeField.setOnAction(event -> {
-            timeOfScheduling = Integer.parseInt(timeField.getText());
+        timeButton.setOnAction(event -> {
+            try {
+                timeOfScheduling = Integer.parseInt(timeField.getText());
+            } catch (NumberFormatException e) {
+                // Xử lý lỗi khi người dùng nhập sai định dạng số
+                showError("Please enter a valid number for time.");
+            }
         });
     }
 
@@ -112,5 +124,16 @@ public class EDFController extends BaseController {
         Text name = new Text("P" + i);
         processQueue.getChildren().add(rectangle);
         nameProcessQueue.getChildren().add(name);
+    }
+
+    private void clearFields() {
+        executionTimeField.clear();
+        arrivalTimeField.clear();
+        deadlineField.clear();
+    }
+
+    private void showError(String message) {
+        // Hiển thị thông báo lỗi (có thể sử dụng Alert hoặc Text khác)
+        System.out.println(message); // Thay thế bằng mã hiển thị thông báo thực tế
     }
 }

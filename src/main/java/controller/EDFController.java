@@ -53,7 +53,7 @@ public class EDFController extends BaseController {
     public void initialize() {
         // Khởi tạo danh sách màu sắc
         colorList = new ArrayList<>();
-        colorList.add(Color.web("#000000"));   // Đen
+        colorList.add(Color.web("#FFFFFF"));   // Trắng
         colorList.add(Color.web("#FF0000"));   // Đỏ
         colorList.add(Color.web("#00FF00"));   // Xanh lá cây
         colorList.add(Color.web("#0000FF"));   // Xanh da trời

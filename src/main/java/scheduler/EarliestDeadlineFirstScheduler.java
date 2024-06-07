@@ -1,58 +1,52 @@
 package scheduler;
 
 import item.Task;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class EarliestDeadlineFirstScheduler {
 
-    // Print scheduling sequence
+    // Hàm lập lịch theo EDF và in ra chuỗi kết quả
     public static StringBuffer earliestDeadlineFirst(ArrayList<Task> tasks, int time) {
         StringBuffer res = new StringBuffer("");
 
-        // In ra trạng thái ban đầu của các nhiệm vụ
-        System.out.println("Initial task states:");
-        for (Task task : tasks) {
-            System.out.println(task);
+        // Sắp xếp các nhiệm vụ theo deadline
+        tasks.sort(Comparator.comparingInt(Task::getDeadline));
+
+        // Mảng lưu lịch trình của các task
+        int[] schedule = new int[time];
+        for (int i = 0; i < time; i++) {
+            schedule[i] = -1; // -1 biểu thị thời gian rảnh
         }
 
+        // Lập lịch các task
         for (int t = 0; t < time; t++) {
             Task currentTask = null;
-            int minDeadline = Integer.MAX_VALUE;
 
-            // Tìm quá trình sẵn sàng để thực thi
+            // Tìm task có thời hạn gần nhất
             for (Task task : tasks) {
-                if (task.getArrivalTime() <= t && task.getRemainingTime() > 0 && task.getDeadline() < minDeadline) {
-                    minDeadline = task.getDeadline();
-                    currentTask = task;
+                if (task.getArrivalTime() <= t && task.getExecutionTime() > 0) {
+                    if (currentTask == null || task.getDeadline() < currentTask.getDeadline()) {
+                        currentTask = task;
+                    }
                 }
             }
 
             if (currentTask != null) {
-                currentTask.setRemainingTime(currentTask.getRemainingTime() - 1);
-                res.append(currentTask.getId()).append(" ");
-
-                // Nếu quá trình hoàn thành, đặt lại thời hạn
-                if (currentTask.getRemainingTime() == 0) {
-                    currentTask.resetTask();
-                }
-            } else {
-                res.append("0 "); // Thời gian rảnh
-            }
-
-            // In ra trạng thái của các nhiệm vụ tại mỗi thời điểm
-            System.out.println("Time " + t + ":");
-            for (Task task : tasks) {
-                System.out.println(task);
-            }
-
-            // Cập nhật thời hạn của tất cả các task đang chờ
-            for (Task task : tasks) {
-                if (task != currentTask && task.getRemainingTime() > 0 && task.getArrivalTime() <= t) {
-                    task.setDeadline(task.getDeadline() - 1);
-                }
+                schedule[t] = currentTask.getId();
+                currentTask.setExecutionTime(currentTask.getExecutionTime() - 1);
             }
         }
+
+        // Xây dựng chuỗi kết quả
+        for (int t = 0; t < time; t++) {
+            if (schedule[t] == -1) {
+                res.append("0 ");
+            } else {
+                res.append(schedule[t]).append(" ");
+            }
+        }
+
         System.out.println(res);
         return res;
     }

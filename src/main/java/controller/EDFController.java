@@ -162,6 +162,7 @@ public class EDFController extends BaseController {
     }
 
     public void taskWork(int i, HBox processQueue) {
+        processQueue.setAlignment(Pos.CENTER);
         VBox vbox = new VBox(); // Create a new VBox
         vbox.setAlignment(Pos.CENTER);
         Text name;
@@ -173,15 +174,18 @@ public class EDFController extends BaseController {
         } else {
             name = new Text("Idle");
         }
+        currentTime = currentTime + 1;
+        Text current;
+        current= new Text(Integer.toString(currentTime));
         // Kiểm tra nếu thời gian lớn hơn hoặc bằng 50
         if (timeOfScheduling >= 50) {
             name.setWrappingWidth(rectangle.getWidth());
             String newSize = "-fx-font-size: " + (8 - timeOfScheduling / 50) + ";";
             name.setStyle(newSize); // Điều chỉnh kích thước font cỡ
             name.setTextAlignment(TextAlignment.CENTER); // Căn giữa text
+            current.setStyle("-fx-font-size: 8");
         }
-        currentTime = currentTime + 1;
-        Text current = new Text(Integer.toString(currentTime));
+
         vbox.getChildren().addAll(current, rectangle, name); // Thêm Rectangle và Text vào VBox
         processQueue.getChildren().add(vbox); // Thêm VBox vào processQueue
     }

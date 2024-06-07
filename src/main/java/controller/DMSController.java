@@ -1,6 +1,6 @@
 package controller;
 
-public class DeadlineMonotonicController extends BaseController{
+public class DMSController extends BaseController{
 
     public static void initialize() {
     }

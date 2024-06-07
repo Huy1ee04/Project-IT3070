@@ -5,20 +5,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefHeight="600.0" prefWidth="800" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <stylesheets>
       <URL value="@../style/Main.css" />
    </stylesheets>
    <children>
       <AnchorPane prefHeight="606.0" prefWidth="250.0">
          <children>
-            <Button fx:id="WFQButton" layoutX="93.0" layoutY="519.0" mnemonicParsing="false" text="WFQ" />
-            <Button fx:id="RMSButton" layoutX="88.0" layoutY="444.0" mnemonicParsing="false" text="RMS" />
-            <Button fx:id="EDFButton" layoutX="88.0" layoutY="370.0" mnemonicParsing="false" text="EDF" />
-            <Button layoutX="88.0" layoutY="303.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="88.0" layoutY="215.0" mnemonicParsing="false" text="Button" />
+            <Button fx:id="WFQButton" layoutX="100.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="WFQ" />
+            <Button fx:id="RMSButton" layoutX="100.0" layoutY="440.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="RMS" />
+            <Button fx:id="EDFButton" layoutX="100.0" layoutY="380.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="EDF" />
+            <Button layoutX="100.0" layoutY="320.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="DMS" />
+            <Button layoutX="100.0" layoutY="260.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="LLF" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fdfdfd" height="94.0" layoutX="26.0" layoutY="54.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
          </children>
       </AnchorPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="170.0" layoutX="422.0" layoutY="-134.0" rotate="56.3" stroke="BLACK" strokeType="INSIDE" width="219.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="170.0" layoutX="479.0" layoutY="-116.0" rotate="56.3" stroke="BLACK" strokeType="INSIDE" width="219.0" />
    </children>
 </AnchorPane>

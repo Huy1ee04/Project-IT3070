@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -12,12 +13,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import manager.SwitchManager;
 import scheduler.EarliestDeadlineFirstScheduler;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class EDFController extends BaseController {
     @FXML
@@ -30,6 +37,10 @@ public class EDFController extends BaseController {
     Button resetButton;
     @FXML
     Button addProcessButton;
+    @FXML
+    Button loadFromFileButton;
+    @FXML
+    TextField filePathField;
     @FXML
     TextField executionTimeField;
     @FXML
@@ -65,13 +76,13 @@ public class EDFController extends BaseController {
         colorList.add(Color.web("#40E0D0"));   // Xanh ngọc
         colorList.add(Color.web("#800080"));   // Tím
 
-
         // Thiết lập hành động cho các nút
         returnButton.setOnAction(event -> {
             SwitchManager.goHomePage(this, event);
         });
         resetButton.setOnAction(event -> {
             try {
+                id = 0;
                 SwitchManager.goEDFPage(this, event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -84,6 +95,7 @@ public class EDFController extends BaseController {
                 int deadline = Integer.parseInt(deadlineField.getText());
                 id++;
                 tasks.add(new Task(id, executionTime, deadline, arrivalTime, "P" + id));
+                ensureColorCapacity(id);  // Ensure there is a color for each task
                 clearFields();  // Xóa các trường sau khi thêm tiến trình
             } catch (NumberFormatException e) {
                 // Xử lý lỗi khi người dùng nhập sai định dạng số
@@ -93,7 +105,7 @@ public class EDFController extends BaseController {
         runButton.setOnAction(event -> {
             result = EarliestDeadlineFirstScheduler.earliestDeadlineFirst(tasks, timeOfScheduling);
             visualizeResult();
-            for(Task task : tasks){
+            for (Task task : tasks) {
                 System.out.println(task.getId());
             }
         });
@@ -105,6 +117,34 @@ public class EDFController extends BaseController {
                 showError("Please enter a valid number for time.");
             }
         });
+
+        loadFromFileButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(null);
+            if (file != null) {
+                filePathField.setText(file.getAbsolutePath());
+                loadTasksFromFile(file);
+            }
+        });
+    }
+
+    private void loadTasksFromFile(File file) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("\\s+");
+                if (parts.length == 3) {
+                    int executionTime = Integer.parseInt(parts[0]);
+                    int arrivalTime = Integer.parseInt(parts[1]);
+                    int deadline = Integer.parseInt(parts[2]);
+                    id++;
+                    tasks.add(new Task(id, executionTime, deadline, arrivalTime, "P" + id));
+                    ensureColorCapacity(id);  // Ensure there is a color for each task
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            showError("Error reading file or invalid file format.");
+        }
     }
 
     private void visualizeResult() {
@@ -112,9 +152,9 @@ public class EDFController extends BaseController {
         Timeline timeline = new Timeline();
         for (int i = 0; i < resultArray.length; i++) {
             int index = i;
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(2*index), event -> {
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(2 * index), event -> {
                 int processId = Integer.parseInt(resultArray[index]);
-                    taskWork(processId, processQueue);
+                taskWork(processId, processQueue);
             });
             timeline.getKeyFrames().add(keyFrame);
         }
@@ -124,15 +164,28 @@ public class EDFController extends BaseController {
     public void taskWork(int i, HBox processQueue) {
         VBox vbox = new VBox(); // Create a new VBox
         vbox.setAlignment(Pos.CENTER);
-        Rectangle rectangle = new Rectangle(weight/timeOfScheduling, 60);
+        Text name;
+        Rectangle rectangle = new Rectangle(weight / timeOfScheduling, 60);
         rectangle.setFill(colorList.get(i % colorList.size()));
         CPU.setFill(colorList.get(i % colorList.size()));
-        Text name = new Text("P" + i);
+        if (i != 0) {
+            name = new Text("P" + i);
+        } else {
+            name = new Text("Idle");
+        }
+        // Kiểm tra nếu thời gian lớn hơn hoặc bằng 50
+        if (timeOfScheduling >= 50) {
+            name.setWrappingWidth(rectangle.getWidth());
+            String newSize = "-fx-font-size: " + (8 - timeOfScheduling / 50) + ";";
+            name.setStyle(newSize); // Điều chỉnh kích thước font cỡ
+            name.setTextAlignment(TextAlignment.CENTER); // Căn giữa text
+        }
         currentTime = currentTime + 1;
         Text current = new Text(Integer.toString(currentTime));
-        vbox.getChildren().addAll(current,rectangle, name); // Add Rectangle and Text to VBox
-        processQueue.getChildren().add(vbox); // Add VBox to processQueue
+        vbox.getChildren().addAll(current, rectangle, name); // Thêm Rectangle và Text vào VBox
+        processQueue.getChildren().add(vbox); // Thêm VBox vào processQueue
     }
+
 
     private void clearFields() {
         executionTimeField.clear();
@@ -141,7 +194,21 @@ public class EDFController extends BaseController {
     }
 
     private void showError(String message) {
-        // Hiển thị thông báo lỗi (có thể sử dụng Alert hoặc Text khác)
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText(message);
+        alert.showAndWait();
         System.out.println(message); // Thay thế bằng mã hiển thị thông báo thực tế
+    }
+
+    private void ensureColorCapacity(int id) {
+        // Generate random colors and add to the list if needed
+        while (colorList.size() < id) {
+            colorList.add(generateRandomColor());
+        }
+    }
+
+    private Color generateRandomColor() {
+        Random random = new Random();
+        return Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }
 }

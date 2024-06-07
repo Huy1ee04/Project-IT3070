@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
@@ -23,7 +24,7 @@
             </ImageView>
          </children>
       </StackPane>
-      <HBox fx:id="processQueue" layoutX="25.0" layoutY="272.0" prefHeight="100.0" prefWidth="750.0">
+      <HBox fx:id="processQueue" layoutY="272.0" prefHeight="100.0" prefWidth="800.0">
          <padding>
             <Insets top="20.0" />
          </padding>
@@ -46,7 +47,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <!-- Các trường nhập liệu -->
       <TextField fx:id="executionTimeField" layoutX="150.0" layoutY="130.0" promptText="Execution Time" />
       <TextField fx:id="arrivalTimeField" layoutX="150.0" layoutY="100.0" promptText="Arrival Time" />
       <TextField fx:id="deadlineField" layoutX="150.0" layoutY="160.0" promptText="Deadline" />
@@ -55,5 +55,18 @@
       <TextField fx:id="timeField" layoutX="576.0" layoutY="100.0" promptText="Time" />
       <Button fx:id="timeButton" layoutX="584.0" layoutY="160.0" mnemonicParsing="false" text="Add Time" />
       <Text fx:id="errorText" layoutX="232.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="error-text" text="Nice to meet you all friends !! XDDDDDD" wrappingWidth="456.13671875" />
+      <VBox layoutX="30.0" layoutY="455.0" prefHeight="100.0" prefWidth="290.0" spacing="20.0">
+         <children>
+            <TextField fx:id="filePathField" prefHeight="25.0" prefWidth="237.0" promptText="Enter file path or use button" />
+            <!-- Các trường nhập liệu -->
+            <Button fx:id="loadFromFileButton" text="Load From File">
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Button>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding></VBox>
    </children>
 </AnchorPane>

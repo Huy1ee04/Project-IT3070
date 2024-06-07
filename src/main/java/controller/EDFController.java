@@ -213,6 +213,6 @@ public class EDFController extends BaseController {
 
     private Color generateRandomColor() {
         Random random = new Random();
-        return Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+        return Color.rgb(random.nextInt(256)%255, random.nextInt(256), random.nextInt(256));
     }
 }

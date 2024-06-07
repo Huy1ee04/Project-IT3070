@@ -5,15 +5,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
+import manager.SwitchManager;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RMSController implements Initializable {
+public class RMSController extends BaseController implements Initializable {
+    public Button returnButton;
+    public Button resetButton;
+    public Label errorLabel;
     @FXML
     private TextField processCountField;
     @FXML
@@ -26,8 +31,6 @@ public class RMSController implements Initializable {
     private TableView<Result> resultTable;
     @FXML
     private TableColumn<Result, Integer> timeColumn;
-    @FXML
-    private TableColumn<Result, String> processColumn;
 
     private ObservableList<Result> resultList = FXCollections.observableArrayList();
 
@@ -39,6 +42,7 @@ public class RMSController implements Initializable {
         String[] periods = periodField.getText().split(",");
 
         if (executionTimes.length != processCount || periods.length != processCount) {
+            errorLabel.setVisible(true);
             System.out.println("Number of execution times and periods must match the number of processes.");
             return;
         }
@@ -51,15 +55,29 @@ public class RMSController implements Initializable {
         }
 
         resultList.clear();
+        resultTable.getColumns().clear();
+        resultTable.getColumns().add(timeColumn);
+
+        float utilization = 0;
+        for (int i = 0; i < processCount; i++) {
+            utilization += (float) ((1.0 * executionTime[i]) / period[i]);
+        }
+
+        int n = processCount;
+        if (utilization > n * (Math.pow(2, 1.0 / n) - 1)) {
+            errorLabel.setVisible(true);
+            return;
+        } else {
+            errorLabel.setVisible(false);
+        }
+
         simulateRMS(processCount, observationTime, executionTime, period);
     }
 
     private void simulateRMS(int processCount, int observationTime, int[] executionTime, int[] period) {
         int[] remainTime = new int[processCount];
         int[] processList = new int[observationTime];
-        for (int i = 0; i < processCount; i++) {
-            remainTime[i] = executionTime[i];
-        }
+        System.arraycopy(executionTime, 0, remainTime, 0, processCount);
 
         for (int i = 0; i < observationTime; i++) {
             int nextProcess = -1;
@@ -84,33 +102,109 @@ public class RMSController implements Initializable {
             }
         }
 
+        // Add process columns dynamically
+        for (int p = 1; p <= processCount; p++) {
+            TableColumn<Result, String> processColumn = new TableColumn<>("P[" + p + "]");
+            processColumn.setCellValueFactory(new PropertyValueFactory<>("process" + p));
+            processColumn.setCellFactory(column -> new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(item);
+                        setStyle("-fx-background-color: " + (item.equals("Running") ? "lightgreen" : "white"));
+                    }
+                }
+            });
+            resultTable.getColumns().add(processColumn);
+        }
+
         for (int i = 0; i < observationTime; i++) {
-            resultList.add(new Result(i, processList[i] == 0 ? "" : "P[" + processList[i] + "]"));
+            Result result = new Result(i);
+            for (int p = 1; p <= processCount; p++) {
+                result.setProcessStatus(p, processList[i] == p ? "Running" : "");
+            }
+            resultList.add(result);
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        errorLabel.setVisible(false);
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        processColumn.setCellValueFactory(new PropertyValueFactory<>("process"));
         resultTable.setItems(resultList);
+        returnButton.setOnAction(event -> {
+            SwitchManager.goHomePage(this, event);
+        });
+        resetButton.setOnAction(event -> {
+            try {
+                SwitchManager.goRMSPage(this, event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public static class Result {
         private final int time;
-        private final String process;
+        private final String[] processStatus;
 
-        public Result(int time, String process) {
+        public Result(int time) {
             this.time = time;
-            this.process = process;
+            this.processStatus = new String[10]; // Assume max 10 processes for simplicity
         }
 
         public int getTime() {
             return time;
         }
 
-        public String getProcess() {
-            return process;
+        public String getProcess1() {
+            return processStatus[0];
+        }
+
+        public String getProcess2() {
+            return processStatus[1];
+        }
+
+        public String getProcess3() {
+            return processStatus[2];
+        }
+
+        public String getProcess4() {
+            return processStatus[3];
+        }
+
+        public String getProcess5() {
+            return processStatus[4];
+        }
+
+        public String getProcess6() {
+            return processStatus[5];
+        }
+
+        public String getProcess7() {
+            return processStatus[6];
+        }
+
+        public String getProcess8() {
+            return processStatus[7];
+        }
+
+        public String getProcess9() {
+            return processStatus[8];
+        }
+
+        public String getProcess10() {
+            return processStatus[9];
+        }
+
+        public void setProcessStatus(int process, String status) {
+            if (process >= 1 && process <= 10) {
+                processStatus[process - 1] = status;
+            }
         }
     }
 }

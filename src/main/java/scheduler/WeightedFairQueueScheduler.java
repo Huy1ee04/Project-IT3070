@@ -3,6 +3,8 @@ package scheduler;
 import container.Flow;
 import item.Packet;
 import javafx.application.Platform;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
@@ -12,7 +14,7 @@ import transmisstion.QueueOut;
 import java.util.ArrayList;
 
 public class WeightedFairQueueScheduler {
-    private static int order = 0;
+    public static int order = 0;
 
     public static void simulationWFQ(ArrayList<Flow> flows, QueueOut queueOut, Text resourceRemain) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> processFlows(flows, queueOut,resourceRemain)));
@@ -42,7 +44,25 @@ public class WeightedFairQueueScheduler {
                     pkg.setSrcFlow(flow);
                     queueOut.addPackage(pkg);
                     Platform.runLater(() -> {
-                        queueOut.gethBox().getChildren().addFirst(pkg.getNode());
+                        StackPane stackPane = new StackPane();
+
+// Tạo đoạn text từ pkg.getOrderTrans() và đặt màu
+                        Text orderText = new Text(Integer.toString(pkg.getOrderTrans()));
+                        orderText.setFill(Paint.valueOf("RED"));
+
+// Làm cho Text không chặn sự kiện nhấn chuột
+                        orderText.setMouseTransparent(true);
+
+// Thêm Node của pkg vào trong stackPane
+                        stackPane.getChildren().add(pkg.getNode());
+
+// Thêm đoạn text vào trong stackPane
+                        stackPane.getChildren().add(orderText);
+
+// Thêm stackPane vào trong HBox của queueOut
+                        queueOut.gethBox().getChildren().addFirst(stackPane);
+
+
                     });
                 }
                 flow.updateHbox();

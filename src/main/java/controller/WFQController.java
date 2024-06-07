@@ -67,6 +67,7 @@ public class WFQController extends BaseController{
     @FXML
     private Text resourceRemain;
     public void initialize() {
+        WeightedFairQueueScheduler.order = 0;
         ArrayList<Flow> flows = new ArrayList<>();
         QueueOut queueOut = new QueueOut();
         queueOut.sethBox(outputQueueHBox);
@@ -89,7 +90,7 @@ public class WFQController extends BaseController{
         flows.add(flow1);
         flows.add(flow2);
         flows.add(flow3);
-        createFirstFlow.setOnAction(event -> showInputDialogAndAddSquare(flow1,  "First Flow", Color.BLUE));
+        createFirstFlow.setOnAction(event -> showInputDialogAndAddSquare(flow1,  "First Flow", Color.LIGHTGRAY));
         createSecondFlow.setOnAction(event -> showInputDialogAndAddSquare(flow2,  "Second Flow", Color.GREEN));
         createThirdFlow.setOnAction(event -> showInputDialogAndAddSquare(flow3,  "Third Flow", Color.YELLOW));
         startButton.setOnAction(event -> {

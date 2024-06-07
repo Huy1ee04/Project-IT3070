@@ -11,7 +11,8 @@ public class MainController extends BaseController{
     private Button WFQButton;
     @FXML
     private Button RMSButton;
-
+    @FXML
+    private Button EDFButton;
 
     public void initialize(){
     WFQButton.setOnAction(event -> {
@@ -24,6 +25,13 @@ public class MainController extends BaseController{
         RMSButton.setOnAction(event -> {
             try {
                 SwitchManager.goRMSPage(this,event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        EDFButton.setOnAction(event -> {
+            try {
+                SwitchManager.goEDFPage(this,event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

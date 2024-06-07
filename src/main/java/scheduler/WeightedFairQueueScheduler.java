@@ -14,7 +14,7 @@ import transmisstion.QueueOut;
 import java.util.ArrayList;
 
 public class WeightedFairQueueScheduler {
-    private static int order = 0;
+    public static int order = 0;
 
     public static void simulationWFQ(ArrayList<Flow> flows, QueueOut queueOut, Text resourceRemain) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> processFlows(flows, queueOut,resourceRemain)));

@@ -134,8 +134,8 @@ public class EDFController extends BaseController {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\\s+");
                 if (parts.length == 3) {
-                    int executionTime = Integer.parseInt(parts[0]);
-                    int arrivalTime = Integer.parseInt(parts[1]);
+                    int arrivalTime = Integer.parseInt(parts[0]);
+                    int executionTime = Integer.parseInt(parts[1]);
                     int deadline = Integer.parseInt(parts[2]);
                     id++;
                     tasks.add(new Task(id, executionTime, deadline, arrivalTime, "P" + id));

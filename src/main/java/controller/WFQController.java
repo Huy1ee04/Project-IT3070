@@ -67,6 +67,7 @@ public class WFQController extends BaseController{
     @FXML
     private Text resourceRemain;
     public void initialize() {
+        WeightedFairQueueScheduler.order = 0;
         ArrayList<Flow> flows = new ArrayList<>();
         QueueOut queueOut = new QueueOut();
         queueOut.sethBox(outputQueueHBox);

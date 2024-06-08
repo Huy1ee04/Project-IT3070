@@ -10,6 +10,8 @@ public class Task implements Comparable<Task> {
     private int arrivalTime;
     private String name;
 
+    public static int countTasks = 0;
+
     // Constructors
     public Task(int id, int executionTime, int period, int deadline) {
         this.id = id;
@@ -19,6 +21,7 @@ public class Task implements Comparable<Task> {
         this.remainingTime = executionTime;
         this.nextPeriodStart = 0;
         this.arrivalTime = 0;
+        countTasks++;
     }
 
     public Task(int id, int executionTime, int period, int deadline, int arrivalTime) {
@@ -29,6 +32,7 @@ public class Task implements Comparable<Task> {
         this.remainingTime = executionTime;
         this.nextPeriodStart = arrivalTime + period;
         this.arrivalTime = arrivalTime;
+        countTasks++;
     }
 
     public Task(int id, int executionTime, int deadline, int arrivalTime, String name) {
@@ -38,6 +42,7 @@ public class Task implements Comparable<Task> {
         this.remainingTime = executionTime;
         this.arrivalTime = arrivalTime;
         this.name = name;
+        countTasks++;
     }
 
     // Getters and Setters
@@ -96,6 +101,9 @@ public class Task implements Comparable<Task> {
     public void setArrivalTime(int arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
+
+    public String getName() {return name;};
+
 
     // Reset task for the next period
     public void resetTask() {

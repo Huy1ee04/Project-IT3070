@@ -58,6 +58,7 @@ public class RMSController extends BaseController implements Initializable {
         resultTable.getColumns().clear();
         resultTable.getColumns().add(timeColumn);
 
+        //Kiểm tra điều kiện lập lịch
         float utilization = 0;
         for (int i = 0; i < processCount; i++) {
             utilization += (float) ((1.0 * executionTime[i]) / period[i]);

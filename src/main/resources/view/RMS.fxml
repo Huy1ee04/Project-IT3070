@@ -28,7 +28,7 @@
             <Label text="Thời gian quan sát:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <TextField fx:id="observationTimeField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <Label text="Thời gian/Chu kỳ (cách nhau bằng dấu phẩy):" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label text="Thời gian chạy/Chu kỳ (cách nhau dấu phẩy):" GridPane.columnIndex="0" GridPane.rowIndex="2" />
             <TextField fx:id="executionTimeField" prefHeight="26.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
             <Label text="Chu kỳ (cách nhau bằng dấu phẩy):" GridPane.columnIndex="0" GridPane.rowIndex="3" />

@@ -52,20 +52,15 @@ public class SwitchManager {
     }
 
 
-    public static void goDeadlineMonotonicPage(BaseController baseController, Event event) throws IOException {
+    public static void goDMSPage(BaseController baseController, Event event) throws IOException {
         FXMLLoader loader = new FXMLLoader(baseController.getClass().getResource("/view/DMS.fxml"));
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        DMSController deadlineMonotonicController = loader.getController();
-        DMSController.initialize();
+        root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
     public static void goHomePage(BaseController baseController, Event event){
         FXMLLoader loader = new FXMLLoader(baseController.getClass().getResource("/view/Main.fxml"));
         try {

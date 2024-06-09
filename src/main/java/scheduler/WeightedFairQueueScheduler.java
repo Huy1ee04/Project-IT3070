@@ -41,25 +41,15 @@ public class WeightedFairQueueScheduler {
                 flow.setPackageOut();
                 for (Packet pkg : flow.getPackageOut()) {
                     pkg.setOrderTrans(++order);
-                    pkg.setSrcFlow(flow);
-                    queueOut.addPackage(pkg);
+                    queueOut.add(pkg);
                     Platform.runLater(() -> {
                         StackPane stackPane = new StackPane();
 
-// Tạo đoạn text từ pkg.getOrderTrans() và đặt màu
                         Text orderText = new Text(Integer.toString(pkg.getOrderTrans()));
                         orderText.setFill(Paint.valueOf("RED"));
-
-// Làm cho Text không chặn sự kiện nhấn chuột
                         orderText.setMouseTransparent(true);
-
-// Thêm Node của pkg vào trong stackPane
                         stackPane.getChildren().add(pkg.getNode());
-
-// Thêm đoạn text vào trong stackPane
                         stackPane.getChildren().add(orderText);
-
-// Thêm stackPane vào trong HBox của queueOut
                         queueOut.gethBox().getChildren().addFirst(stackPane);
 
 

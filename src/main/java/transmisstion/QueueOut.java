@@ -5,7 +5,7 @@ import java.util.List;
 import item.Packet; // Import lớp Package từ gói Item
 import javafx.scene.layout.HBox;
 
-public class QueueOut {
+public class QueueOut implements ITransLine{
     private final List<Packet> outgoingQueue;
     private int throughput; // Thuộc tính đại diện cho thông lượng của hàng đợi
     private HBox hBox;
@@ -15,34 +15,16 @@ public class QueueOut {
         this.throughput = 0; // Khởi tạo thông lượng ban đầu là 0
     }
 
-    // Phương thức để thêm gói tin vào hàng đợi
-    public void addPackage(Packet packet) {
-        outgoingQueue.add(packet);
-    }
-
-    // Phương thức để lấy gói tin từ hàng đợi
-    public Packet retrievePackage() {
-        if (!outgoingQueue.isEmpty()) {
-            return outgoingQueue.remove(0); // Lấy và loại bỏ gói tin đầu tiên
-        }
-        return null; // Trả về null nếu hàng đợi rỗng
-    }
-
-    // Phương thức để kiểm tra xem hàng đợi có rỗng không
+    @Override
     public boolean isEmpty() {
         return outgoingQueue.isEmpty();
     }
 
-    // Phương thức in ra thông tin của các gói tin trong hàng đợi
-    public void printQueueInfo() {
-        System.out.println("Outgoing Queue Information:");
-        for (Packet packet : outgoingQueue) {
-            System.out.println("Packet Size: " + packet.getSizePackage());
-            // In thêm các thông tin khác của gói tin nếu cần
-        }
+    @Override
+    public <Packet> void add(Packet packet) {
+        this.outgoingQueue.add((item.Packet) packet);
     }
 
-    // Getter và Setter cho thông lượng
     public int getThroughput() {
         return throughput;
     }

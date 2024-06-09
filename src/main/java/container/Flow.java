@@ -28,9 +28,16 @@ public class Flow implements IContainer {
     public boolean isEmpty() {
         return this.queue.isEmpty();
     }
+    @Override
+    public <Packet>void add(Packet packet) {
+        queue.add((item.Packet) packet);
+    }
 
-    public void addPacket(Packet packet) {
-        queue.add(packet);
+    @Override
+    public <Packet> Packet remove() {
+        if(!isEmpty())
+        return (Packet) queue.removeFirst();
+        return null;
     }
 
     // Getter và Setter cho weight
@@ -70,7 +77,7 @@ public class Flow implements IContainer {
 
     public void setPackageOut() {
         while (!queue.isEmpty() && resorceAllocation >= queue.getFirst().getSizePackage()) {
-            Packet pkg = queue.removeFirst();
+            Packet pkg = this.remove();
             resorceAllocation -= pkg.getSizePackage();
             packetOutList.add(pkg);
         }
@@ -79,11 +86,9 @@ public class Flow implements IContainer {
     public void updateHbox() {
         Platform.runLater(() -> {
             while (!packetOutList.isEmpty()) {
-                Packet pkg = packetOutList.removeFirst();
                 if (!hbox.getChildren().isEmpty()) {
                     hbox.getChildren().removeFirst();
                 }
-                pkg.setSrcFlow(this);
             }
         });
     }

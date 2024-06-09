@@ -1,13 +1,12 @@
 package item;
 
-import container.Flow;
+
 import javafx.scene.Node;
 
 public class Packet implements ITransUnit {
     private final int sizePackage; // Kích thước của package
     private int resourceAlloc; // Tài nguyên cấp phát cho package
     private int orderTrans; // Thứ tự truyền tải
-    private Flow srcFlow; // Luồng nguồn
     private Node node;
 
     // Constructor
@@ -41,10 +40,6 @@ public class Packet implements ITransUnit {
     }
 
     // Getter và Setter cho luồng nguồn
-
-    public void setSrcFlow(Flow srcFlow) {
-        this.srcFlow = srcFlow;
-    }
 
     public Node getNode() {
         return this.node;

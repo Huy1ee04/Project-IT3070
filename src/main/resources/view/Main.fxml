@@ -15,7 +15,7 @@
             <Button fx:id="WFQButton" layoutX="100.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="WFQ" />
             <Button fx:id="RMSButton" layoutX="100.0" layoutY="440.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="RMS" />
             <Button fx:id="EDFButton" layoutX="100.0" layoutY="380.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="EDF" />
-            <Button layoutX="100.0" layoutY="320.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="DMS" />
+            <Button fx:id="DMSButton" layoutX="100.0" layoutY="320.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="DMS" />
             <Button fx:id="LLFButton" layoutX="100.0" layoutY="260.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="LLF" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fdfdfd" height="94.0" layoutX="26.0" layoutY="54.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
          </children>

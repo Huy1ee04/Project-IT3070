@@ -35,13 +35,14 @@ public class Task implements Comparable<Task>, ITransUnit {
         countTasks++;
     }
 
-    public Task(int id, int executionTime, int deadline, int arrivalTime, String name) {
+    public Task(int id, int executionTime, int deadline, int arrivalTime,int period, String name) {
         this.id = id;
         this.executionTime = executionTime;
         this.deadline = deadline;
         this.remainingTime = executionTime;
         this.arrivalTime = arrivalTime;
         this.name = name;
+        this.period =period;
         countTasks++;
     }
 

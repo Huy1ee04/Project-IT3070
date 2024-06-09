@@ -34,10 +34,10 @@
             <Label text="Chu kỳ (Period):" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <TextField fx:id="periodField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-            <Label text="Thời điểm xuất hiện (Release Time)" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <Label text="Thời điểm xuất hiện (Release Time):" GridPane.columnIndex="0" GridPane.rowIndex="4" />
             <TextField fx:id="arrivalTimeField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-            <Label text="Thời điểm đầu tiên xuất hiện" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <Label text="Deadline:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
             <TextField fx:id="deadlineField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
             <Button onAction="#handleSimulateButtonAction" text="Mô phỏng" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -69,6 +69,6 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Label fx:id="errorLabel" alignment="CENTER" layoutX="249.0" layoutY="193.0" prefHeight="26.0" prefWidth="233.0" text="Thông tin không hợp lệ" />
+        <Label fx:id="errorLabel" alignment="CENTER" layoutX="249.0" layoutY="263.0" prefHeight="26.0" prefWidth="233.0" text="Thông tin không hợp lệ" />
     </children>
 </AnchorPane>

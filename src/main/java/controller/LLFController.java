@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import item.Task;
+import scheduler.LeastLaxityFirstScheduler;
+
 public class LLFController extends BaseController implements Initializable {
     public Button returnButton;
     public Button resetButton;
@@ -61,7 +64,7 @@ public class LLFController extends BaseController implements Initializable {
         for (int i = 0; i < processCount; i++) {
             executionTime[i] = Integer.parseInt(executionTimes[i]);
             period[i] = Integer.parseInt(periods[i]);
-            arrivalTime[i] = Integer.parseInt(periods[i]);
+            arrivalTime[i] = Integer.parseInt(arrivalTimes[i]);
             deadline[i] = Integer.parseInt(deadlines[i]);
         }
 
@@ -72,48 +75,36 @@ public class LLFController extends BaseController implements Initializable {
 
 
 //        kiểm tra điê kiện sử dụng cpu
-        float utilization = 0;
-        for (int i = 0; i < processCount; i++) {
-            utilization += (float) ((1.0 * executionTime[i]) / period[i]);
-        }
+//        float utilization = 0;
+//        for (int i = 0; i < processCount; i++) {
+//            utilization += (float) ((1.0 * executionTime[i]) / period[i]);
+//        }
+//
+//        int n = processCount;
+//        if (utilization > n * (Math.pow(2, 1.0 / n) - 1)) {
+//            errorLabel.setVisible(true);
+//            return;
+//        } else {
+//            errorLabel.setVisible(false);
+//        }
 
-        int n = processCount;
-        if (utilization > n * (Math.pow(2, 1.0 / n) - 1)) {
-            errorLabel.setVisible(true);
-            return;
-        } else {
-            errorLabel.setVisible(false);
-        }
-
-        simulateLLF(processCount, observationTime, executionTime, period);
+        simulateLLF(processCount, observationTime, executionTime, period, arrivalTime, deadline);
     }
 
-    private void simulateLLF(int processCount, int observationTime, int[] executionTime, int[] period) {
+    private void simulateLLF(int processCount, int observationTime, int[] executionTime, int[] period, int[] arrivalTime, int[] deadline) {
         int[] remainTime = new int[processCount];
         int[] processList = new int[observationTime];
-        System.arraycopy(executionTime, 0, remainTime, 0, processCount);
+        LeastLaxityFirstScheduler scheduler = new LeastLaxityFirstScheduler();
+        for (int i = 0; i < processCount; i++) {
+            Task task = new Task(i+1, executionTime[i], period[i], deadline[i], arrivalTime[i]);
+            scheduler.addTask(task);
+        }
+
+        scheduler.scheduleTasks(observationTime);
 
         for (int i = 0; i < observationTime; i++) {
-            int nextProcess = -1;
-            int min = Integer.MAX_VALUE;
-
-            for (int j = 0; j < processCount; j++) {
-                if (remainTime[j] > 0 && period[j] < min) {
-                    min = period[j];
-                    nextProcess = j;
-                }
-            }
-
-            if (nextProcess != -1) {
-                processList[i] = nextProcess + 1;
-                remainTime[nextProcess]--;
-            }
-
-            for (int j = 0; j < processCount; j++) {
-                if ((i + 1) % period[j] == 0) {
-                    remainTime[j] = executionTime[j];
-                }
-            }
+            processList[i] = scheduler.getResults().get(i);
+            System.out.println(processList[i] + " ");
         }
 
         // Add process columns dynamically
@@ -155,7 +146,7 @@ public class LLFController extends BaseController implements Initializable {
         });
         resetButton.setOnAction(event -> {
             try {
-                SwitchManager.goRMSPage(this, event);
+                SwitchManager.goLLFPage(this, event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -163,8 +154,8 @@ public class LLFController extends BaseController implements Initializable {
     }
 
     public static class Result {
-        private final int time;
         private final String[] processStatus;
+        private final int time;
 
         public Result(int time) {
             this.time = time;

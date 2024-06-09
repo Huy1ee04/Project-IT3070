@@ -1,0 +1,15 @@
+#returnButton, #resetButton {
+    -fx-background-color: #2196F3; /* Màu xanh dương */
+}
+
+#returnButton:hover, #resetButton:hover {
+    -fx-background-color: #1e87ca; /* Màu xanh dương nhạt khi di chuột qua */
+}
+
+#resetButton{
+    -fx-graphic:url(/img/download.png);
+}
+
+#returnButton{
+    -fx-graphic:url(/img/home-page.png);
+}

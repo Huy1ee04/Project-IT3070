@@ -152,7 +152,7 @@ public class EDFController extends BaseController {
         Timeline timeline = new Timeline();
         for (int i = 0; i < resultArray.length; i++) {
             int index = i;
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(2 * index), event -> {
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(index), event -> {
                 int processId = Integer.parseInt(resultArray[index]);
                 taskWork(processId, processQueue);
             });

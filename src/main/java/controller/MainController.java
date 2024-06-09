@@ -13,11 +13,21 @@ public class MainController extends BaseController{
     private Button RMSButton;
     @FXML
     private Button EDFButton;
-
+    @FXML
+    private Button LLFButton;
+    @FXML
+    private Button DMSButton;
     public void initialize(){
     WFQButton.setOnAction(event -> {
         try {
             SwitchManager.goWFQPage(this,event);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    });
+    LLFButton.setOnAction(event -> {
+        try {
+            SwitchManager.goLLFPage(this,event);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -32,6 +42,13 @@ public class MainController extends BaseController{
         EDFButton.setOnAction(event -> {
             try {
                 SwitchManager.goEDFPage(this,event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        DMSButton.setOnAction(event -> {
+            try{
+                SwitchManager.goDMSPage(this, event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

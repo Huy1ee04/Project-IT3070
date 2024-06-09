@@ -1,6 +1,6 @@
 package item;
 
-public class Task implements Comparable<Task> {
+public class Task implements Comparable<Task>, ITransUnit {
     private int id;
     private int executionTime;
     private int period;
@@ -116,5 +116,9 @@ public class Task implements Comparable<Task> {
     @Override
     public int compareTo(Task other) {
         return this.deadline - other.deadline;
+    }
+
+    @Override
+    public void showDetail() {
     }
 }

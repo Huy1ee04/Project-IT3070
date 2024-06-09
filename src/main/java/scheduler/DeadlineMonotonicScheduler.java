@@ -42,17 +42,5 @@ public class DeadlineMonotonicScheduler {
             }
         }
     }
-
-    public static void main(String[] args) {
-        DeadlineMonotonicScheduler scheduler = new DeadlineMonotonicScheduler();
-
-        // Add some example tasks
-        scheduler.addTask(new Task(1, 2, 5, 5));
-        scheduler.addTask(new Task(2, 1, 3, 3));
-        scheduler.addTask(new Task(3, 1, 4, 4));
-
-        // Start scheduling for a hypothetical hyper-period
-        int hyperPeriod = 15; // Example hyper-period is 15
-        scheduler.schedule(hyperPeriod);
-    }
 }
+

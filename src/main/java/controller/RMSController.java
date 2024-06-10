@@ -16,8 +16,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RMSController extends BaseController implements Initializable {
-    public Button returnButton;
-    public Button resetButton;
+    @FXML
+    private Button returnButton;
+    @FXML
+    private Button resetButton;
     public Label errorLabel;
     @FXML
     private TextField processCountField;

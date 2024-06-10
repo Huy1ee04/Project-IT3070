@@ -30,42 +30,42 @@ import java.util.Random;
 
 public class EDFController extends BaseController {
     @FXML
-    Rectangle CPU;
+    private Rectangle CPU;
     @FXML
-    HBox processQueue;
+    private HBox processQueue;
     @FXML
-    Button returnButton;
+    private Button returnButton;
     @FXML
-    Button resetButton;
+    private Button resetButton;
     @FXML
-    Button addProcessButton;
+    private Button addProcessButton;
     @FXML
-    Button loadFromFileButton;
+    private Button loadFromFileButton;
     @FXML
-    TextField filePathField;
+    private TextField filePathField;
     @FXML
-    TextField executionTimeField;
+    private TextField executionTimeField;
     @FXML
-    TextField arrivalTimeField;
+    private TextField arrivalTimeField;
     @FXML
-    TextField deadlineField;
+    private TextField deadlineField;
     @FXML
-    Button runButton;
+    private Button runButton;
     @FXML
-    TextField periodTextField;
+    private TextField periodTextField;
     @FXML
-    TextField timeField;
+    private TextField timeField;
     @FXML
-    Button timeButton;
+    private Button timeButton;
     @FXML
-    Button loadFilePathButton;
+    private Button loadFilePathButton;
     int currentTime = 0;
-    ArrayList<Color> colorList;
-    StringBuffer result;
-    ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Color> colorList;
+    private StringBuffer result;
+    private ArrayList<Task> tasks = new ArrayList<>();
     private static int id = 0;
-    int timeOfScheduling = 0;
-    double weight = 750;
+    private int timeOfScheduling = 0;
+    private double weight = 750;
 
     public void initialize() {
         // Khởi tạo danh sách màu sắc
@@ -149,7 +149,7 @@ public class EDFController extends BaseController {
         });
     }
 
-    private void loadTasksFromFile(File file) {
+    public void loadTasksFromFile(File file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -169,7 +169,7 @@ public class EDFController extends BaseController {
         }
     }
 
-    private void visualizeResult() {
+    public void visualizeResult() {
         String[] resultArray = result.toString().split(" ");
         Timeline timeline = new Timeline();
         for (int i = 0; i < resultArray.length; i++) {
@@ -212,19 +212,20 @@ public class EDFController extends BaseController {
         processQueue.getChildren().add(vbox); // Thêm VBox vào processQueue
     }
 
-    private void saveTasksToFile() {
-        File file = new File(".\\resources\\data.txt");
+    public void saveTasksToFile() {
+        File file = new File("D:\\2023.2\\it3070\\Project-IT3070\\src\\main\\resources\\data.txt"); // Use forward slash for better compatibility
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (Task task : tasks) {
                 writer.write(task.getArrivalTime() + " " + task.getExecutionTime() + " " + task.getDeadline() + " " + task.getPeriod());
                 writer.newLine();
             }
         } catch (IOException e) {
-            showError("Error saving tasks to file.");
+            showError("Error saving tasks to file: " + e.getMessage()); // Log the exception message
         }
     }
 
-    private void clearFields() {
+
+    public void clearFields() {
         executionTimeField.clear();
         arrivalTimeField.clear();
         deadlineField.clear();

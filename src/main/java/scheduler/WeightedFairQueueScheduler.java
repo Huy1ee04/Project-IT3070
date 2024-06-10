@@ -17,7 +17,7 @@ public class WeightedFairQueueScheduler {
     public static int order = 0;
 
     public static void simulationWFQ(ArrayList<Flow> flows, QueueOut queueOut, Text resourceRemain) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> processFlows(flows, queueOut,resourceRemain)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> processFlows(flows, queueOut,resourceRemain)));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }

@@ -10,7 +10,9 @@ public class EarliestDeadlineFirstScheduler {
         double utilization = 0;
 
         for (Task task : tasks) {
-            utilization += (double) task.getExecutionTime() / task.getPeriod();
+            if (task.getPeriod() > 0) {
+                utilization += (double) task.getExecutionTime() / task.getPeriod();
+            }
         }
 
         return utilization <= 1;
@@ -42,7 +44,7 @@ public class EarliestDeadlineFirstScheduler {
                 schedule[t] = currentTask.getId();
                 currentTask.setRemainingTime(currentTask.getRemainingTime() - 1);
 
-                // Kiểm tra xem tiến trình đã hoàn thành chưa
+                // Kiểm tra xem tiến trình đã hoàn thành chưa và có chu kỳ không
                 if (currentTask.getRemainingTime() == 0 && currentTask.getPeriod() > 0) {
                     // Cập nhật lại thời hạn cho tiến trình sau khi hoàn thành
                     currentTask.resetTask();

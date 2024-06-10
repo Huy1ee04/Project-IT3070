@@ -98,10 +98,12 @@ public class WFQController extends BaseController{
         });
         returnButton.setOnAction(event -> {
             SwitchManager.goHomePage(this, event);
+            WeightedFairQueueScheduler.order = 0;
         });
         resetButton.setOnAction(event -> {
             try {
                 SwitchManager.goWFQPage(this, event);
+                WeightedFairQueueScheduler.order = 0;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

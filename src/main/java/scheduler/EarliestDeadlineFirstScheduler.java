@@ -1,18 +1,26 @@
 package scheduler;
 
 import item.Task;
+import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class EarliestDeadlineFirstScheduler {
+    public static boolean isSchedulable(ArrayList<Task> tasks) {
+        double utilization = 0;
+
+        for (Task task : tasks) {
+            if (task.getPeriod() > 0) {
+                utilization += (double) task.getExecutionTime() / task.getPeriod();
+            }
+        }
+
+        return utilization <= 1;
+    }
 
     // Hàm lập lịch theo EDF và in ra chuỗi kết quả
     public static StringBuffer earliestDeadlineFirst(ArrayList<Task> tasks, int time) {
         StringBuffer res = new StringBuffer("");
-
-        // Sắp xếp các nhiệm vụ theo deadline
-        tasks.sort(Comparator.comparingInt(Task::getDeadline));
-
         // Mảng lưu lịch trình của các task
         int[] schedule = new int[time];
         for (int i = 0; i < time; i++) {
@@ -23,9 +31,9 @@ public class EarliestDeadlineFirstScheduler {
         for (int t = 0; t < time; t++) {
             Task currentTask = null;
 
-            // Tìm task có thời hạn gần nhất
+            // Tìm task có thời hạn gần nhất và đã sẵn sàng để thực thi
             for (Task task : tasks) {
-                if (task.getArrivalTime() <= t && task.getExecutionTime() > 0) {
+                if (task.getArrivalTime()>= 0 && task.getArrivalTime() <= t && task.getRemainingTime() > 0) {
                     if (currentTask == null || task.getDeadline() < currentTask.getDeadline()) {
                         currentTask = task;
                     }
@@ -34,7 +42,13 @@ public class EarliestDeadlineFirstScheduler {
 
             if (currentTask != null) {
                 schedule[t] = currentTask.getId();
-                currentTask.setExecutionTime(currentTask.getExecutionTime() - 1);
+                currentTask.setRemainingTime(currentTask.getRemainingTime() - 1);
+
+                // Kiểm tra xem tiến trình đã hoàn thành chưa và có chu kỳ không
+                if (currentTask.getRemainingTime() == 0 && currentTask.getPeriod() > 0) {
+                    // Cập nhật lại thời hạn cho tiến trình sau khi hoàn thành
+                    currentTask.resetTask();
+                }
             }
         }
 

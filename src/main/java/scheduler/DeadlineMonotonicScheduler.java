@@ -1,6 +1,7 @@
 package scheduler;
 
 import item.Task;
+
 import java.util.PriorityQueue;
 
 public class DeadlineMonotonicScheduler {
@@ -46,13 +47,35 @@ public class DeadlineMonotonicScheduler {
     public static void main(String[] args) {
         DeadlineMonotonicScheduler scheduler = new DeadlineMonotonicScheduler();
 
-        // Add some example tasks
-        scheduler.addTask(new Task(1, 2, 5, 5));
-        scheduler.addTask(new Task(2, 1, 3, 3));
-        scheduler.addTask(new Task(3, 1, 4, 4));
+        // Create some tasks
+        Task task1 = new Task(1, 2, 5, 5); // Task 1 with execution time 2, period 5, deadline 5
+        Task task2 = new Task(2, 1, 3, 3); // Task 2 with execution time 1, period 3, deadline 3
+        Task task3 = new Task(3, 1, 4, 4); // Task 3 with execution time 1, period 4, deadline 4
 
-        // Start scheduling for a hypothetical hyper-period
-        int hyperPeriod = 15; // Example hyper-period is 15
+        // Add tasks to the scheduler
+        scheduler.addTask(task1);
+        scheduler.addTask(task2);
+        scheduler.addTask(task3);
+
+        // Determine the hyper period (LCM of the periods)
+        int hyperPeriod = lcm(task1.getPeriod(), lcm(task2.getPeriod(), task3.getPeriod()));
+
+        // Schedule the tasks
         scheduler.schedule(hyperPeriod);
+    }
+
+    // Helper method to compute the LCM of two numbers
+    private static int lcm(int a, int b) {
+        return a * (b / gcd(a, b));
+    }
+
+    // Helper method to compute the GCD of two numbers
+    private static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
     }
 }

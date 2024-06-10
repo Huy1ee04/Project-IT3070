@@ -98,10 +98,12 @@ public class WFQController extends BaseController{
         });
         returnButton.setOnAction(event -> {
             SwitchManager.goHomePage(this, event);
+            WeightedFairQueueScheduler.order = 0;
         });
         resetButton.setOnAction(event -> {
             try {
                 SwitchManager.goWFQPage(this, event);
+                WeightedFairQueueScheduler.order = 0;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -136,7 +138,7 @@ public class WFQController extends BaseController{
                         alert.showAndWait();
                         event.consume(); // Ngăn chặn sự kiện nổi bật lên các phần tử cha
                     });
-                    flow.addPacket(pkg);
+                    flow.add(pkg);
                 } catch (NumberFormatException e) {
                     // Handle the case where input is not a valid integer
                     System.err.println("Invalid size entered: " + size);

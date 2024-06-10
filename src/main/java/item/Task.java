@@ -1,6 +1,6 @@
 package item;
 
-public class Task implements Comparable<Task> {
+public class Task implements Comparable<Task>, ITransUnit {
     private int id;
     private int executionTime;
     private int period;
@@ -35,13 +35,14 @@ public class Task implements Comparable<Task> {
         countTasks++;
     }
 
-    public Task(int id, int executionTime, int deadline, int arrivalTime, String name) {
+    public Task(int id, int executionTime, int deadline, int arrivalTime,int period, String name) {
         this.id = id;
         this.executionTime = executionTime;
         this.deadline = deadline;
         this.remainingTime = executionTime;
         this.arrivalTime = arrivalTime;
         this.name = name;
+        this.period =period;
         countTasks++;
     }
 
@@ -118,18 +119,7 @@ public class Task implements Comparable<Task> {
         return this.deadline - other.deadline;
     }
 
-    // Override toString for better debugging
     @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", executionTime=" + executionTime +
-                ", period=" + period +
-                ", deadline=" + deadline +
-                ", remainingTime=" + remainingTime +
-                ", nextPeriodStart=" + nextPeriodStart +
-                ", arrivalTime=" + arrivalTime +
-                ", name='" + name + '\'' +
-                '}';
+    public void showDetail() {
     }
 }

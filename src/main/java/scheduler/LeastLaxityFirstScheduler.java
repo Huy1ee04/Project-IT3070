@@ -91,21 +91,4 @@ public class LeastLaxityFirstScheduler {
     public List<Integer> getResults() {return results;}
     public void setResults(List<Integer> results) {this.results = results;}
 
-//    public static void main(String[] args) {
-//        LeastLaxityFirstScheduler scheduler = new LeastLaxityFirstScheduler();
-//        Task task_1 = new Task(1, 2, 6, 6, 0);
-//        Task task_2 = new Task(2, 2, 8, 8, 0);
-//        Task task_3 = new Task(3, 3, 10, 10,  0);
-//
-//        scheduler.addTask(task_1);
-//        scheduler.addTask(task_2);
-//        scheduler.addTask(task_3);
-//
-//
-//        scheduler.scheduleTasks(25);
-//        for (int i : scheduler.getResults()) {
-//            System.out.print(i + " ");
-//        }
-//
-//    }
 }

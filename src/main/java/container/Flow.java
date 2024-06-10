@@ -9,25 +9,35 @@ import javafx.scene.text.Text;
 public class Flow implements IContainer {
     private String nameFlow;
     private int weight;
-    private final LinkedList<Packet> queue;
+    private  LinkedList<Packet> queue;
     private HBox hbox;
     private Text resourceAlloc = new Text("Allocation: 0");
     private Text resourceReturn = new Text("Return: 0");
     private int resorceAllocation;
     private int resourceRecently;
-    private LinkedList<Packet> packageOut = new LinkedList<>();
+    private LinkedList<Packet> packetOutList = new LinkedList<>();
 
     public Flow(int weight) {
         this.weight = weight;
         this.queue = new LinkedList<>();
     }
+    public Flow(){
 
+    }
+    @Override
     public boolean isEmpty() {
         return this.queue.isEmpty();
     }
+    @Override
+    public <Packet>void add(Packet packet) {
+        queue.add((item.Packet) packet);
+    }
 
-    public void addPacket(Packet packet) {
-        queue.add(packet);
+    @Override
+    public <Packet> Packet remove() {
+        if(!isEmpty())
+        return (Packet) queue.removeFirst();
+        return null;
     }
 
     // Getter và Setter cho weight
@@ -67,30 +77,28 @@ public class Flow implements IContainer {
 
     public void setPackageOut() {
         while (!queue.isEmpty() && resorceAllocation >= queue.getFirst().getSizePackage()) {
-            Packet pkg = queue.removeFirst();
+            Packet pkg = this.remove();
             resorceAllocation -= pkg.getSizePackage();
-            packageOut.add(pkg);
+            packetOutList.add(pkg);
         }
     }
 
     public void updateHbox() {
         Platform.runLater(() -> {
-            while (!packageOut.isEmpty()) {
-                Packet pkg = packageOut.removeFirst();
+            while (!packetOutList.isEmpty()) {
                 if (!hbox.getChildren().isEmpty()) {
                     hbox.getChildren().removeFirst();
                 }
-                pkg.setSrcFlow(this);
             }
         });
     }
 
     public void clearPackageOut(){
-        packageOut.clear();
+        packetOutList.clear();
     }
 
     public LinkedList<Packet> getPackageOut() {
-        return this.packageOut;
+        return this.packetOutList;
     }
 
     public int returnResource() {

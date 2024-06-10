@@ -1,8 +1,6 @@
 package controller;
 
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import manager.SwitchManager;
-
+import show.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -97,7 +95,19 @@ public class DMSController extends BaseController implements Initializable {
         resultTable.getColumns().add(timeColumn);
         resultTable.getColumns().add(processColumn);
 
+        //Kiểm tra điều kiện lập lịch
+        float utilization = 0;
+        for (int i = 0; i < processCount; i++) {
+            utilization += (float) ((1.0 * executionTime[i]) / deadline[i]);
+        }
 
+        int n = processCount;
+        if (utilization > n * (Math.pow(2, 1.0 / n) - 1)) {
+            errorLabel.setVisible(true);
+            return;
+        } else {
+            errorLabel.setVisible(false);
+        }
 
         simulateDMS(processCount, observationTime, executionTime, period, deadline);
     }
@@ -184,40 +194,6 @@ public class DMSController extends BaseController implements Initializable {
     }
 
 
-    public static class Result {
-        private SimpleIntegerProperty time;
-        private SimpleStringProperty[] processStatus;
 
-
-        public Result(int time) {
-            this.time = new SimpleIntegerProperty(time);
-            this.processStatus = new SimpleStringProperty[10];
-            for (int i = 0; i < 10; i++) {
-                processStatus[i] = new SimpleStringProperty("");
-            }
-        }
-
-
-        public int getTime() {
-            return time.get();
-        }
-
-
-        public void setProcessStatus(int process, String status) {
-            processStatus[process - 1].set(status);
-        }
-
-
-        public String getProcess1() { return processStatus[0].get(); }
-        public String getProcess2() { return processStatus[1].get(); }
-        public String getProcess3() { return processStatus[2].get(); }
-        public String getProcess4() { return processStatus[3].get(); }
-        public String getProcess5() { return processStatus[4].get(); }
-        public String getProcess6() { return processStatus[5].get(); }
-        public String getProcess7() { return processStatus[6].get(); }
-        public String getProcess8() { return processStatus[7].get(); }
-        public String getProcess9() { return processStatus[8].get(); }
-        public String getProcess10() { return processStatus[9].get(); }
-    }
 }
 

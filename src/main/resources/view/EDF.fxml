@@ -74,5 +74,6 @@
             <Insets top="10.0" />
          </padding></VBox>
       <TextField fx:id="periodTextField" layoutX="150.0" layoutY="190.0" promptText="Period" />
+      <VBox fx:id="showDetail" layoutX="30.0" layoutY="97.0" prefHeight="200.0" prefWidth="100.0" />
    </children>
 </AnchorPane>

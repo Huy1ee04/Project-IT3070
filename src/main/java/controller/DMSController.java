@@ -96,18 +96,18 @@ public class DMSController extends BaseController implements Initializable {
         resultTable.getColumns().add(processColumn);
 
         //Kiểm tra điều kiện lập lịch
-        float utilization = 0;
-        for (int i = 0; i < processCount; i++) {
-            utilization += (float) ((1.0 * executionTime[i]) / deadline[i]);
-        }
+        //float utilization = 0;
+        //for (int i = 0; i < processCount; i++) {
+        //    utilization += (float) ((1.0 * executionTime[i]) / deadline[i]);
+        //}
 
-        int n = processCount;
-        if (utilization > n * (Math.pow(2, 1.0 / n) - 1)) {
-            errorLabel.setVisible(true);
-            return;
-        } else {
-            errorLabel.setVisible(false);
-        }
+       // int n = processCount;
+       // if (utilization > n * (Math.pow(2, 1.0 / n) - 1)) {
+       //     errorLabel.setVisible(true);
+       //     return;
+       // } else {
+       //     errorLabel.setVisible(false);
+       // }
 
         simulateDMS(processCount, observationTime, executionTime, period, deadline);
     }

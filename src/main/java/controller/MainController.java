@@ -18,6 +18,7 @@ public class MainController extends BaseController{
     @FXML
     private Button DMSButton;
     public void initialize(){
+
     WFQButton.setOnAction(event -> {
         try {
             SwitchManager.goWFQPage(this,event);

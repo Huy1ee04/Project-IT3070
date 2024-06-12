@@ -18,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import manager.SwitchManager;
 import scheduler.EarliestDeadlineFirstScheduler;
+import show.Detail;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -59,6 +60,8 @@ public class EDFController extends BaseController {
     private Button timeButton;
     @FXML
     private Button loadFilePathButton;
+    @FXML
+    private VBox showDetail;
     int currentTime = 0;
     private ArrayList<Color> colorList;
     private StringBuffer result;
@@ -184,6 +187,8 @@ public class EDFController extends BaseController {
     }
 
     public void taskWork(int i, HBox processQueue) {
+        Detail detail = new Detail();
+        detail.showDetailDeadline(showDetail, currentTime);
         processQueue.setAlignment(Pos.CENTER);
         VBox vbox = new VBox(); // Create a new VBox
         vbox.setAlignment(Pos.CENTER);
@@ -196,9 +201,9 @@ public class EDFController extends BaseController {
         } else {
             name = new Text("");
         }
-        currentTime = currentTime + 1;
         Text current;
         current= new Text(Integer.toString(currentTime));
+        currentTime = currentTime + 1;
         // Kiểm tra nếu thời gian lớn hơn hoặc bằng 50
         if (timeOfScheduling >= 50) {
             name.setWrappingWidth(rectangle.getWidth());
